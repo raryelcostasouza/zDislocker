@@ -61,7 +61,7 @@ function checkDependencies
 
 function clearTMPFiles
 {
-    sudo ./util.sh "clearTMP"
+    sudo ./util-root.sh "clearTMP"
 }
 
 function errorMessage
@@ -72,7 +72,7 @@ function errorMessage
 
 function getListNTFSDrives
 {
-    sudo ./util.sh "getListNTFSDrives"
+    sudo ./util-root.sh "getListNTFSDrives"
 }
 
 function getSelectionListBitlockerDrive
@@ -141,14 +141,14 @@ function isBitlockerDrive
 
     #return 0 if true
     #return 1 if false
-    echo $(sudo ./util.sh "isBitlockerDrive" $DRIVE)
+    echo $(sudo ./util-root.sh "isBitlockerDrive" $DRIVE)
 }
 
 function mountDrive
 {
     DRIVE=$1
 
-    sudo ./util.sh "createMountDir" $DRIVE_MOUNTPOINT
+    sudo ./util-root.sh "createMountDir" $DRIVE_MOUNTPOINT
 
     #loop until the user supplies a valid password
     PASSWORD_WRONG=0
@@ -159,7 +159,7 @@ function mountDrive
         if [ -n "$DRIVE_PASSWORD" ]
         then
             #try to unlock the drive
-            PASSWORD_WRONG=$(sudo ./util.sh "decrypt" $DRIVE $DRIVE_PASSWORD)
+            PASSWORD_WRONG=$(sudo ./util-root.sh "decrypt" $DRIVE $DRIVE_PASSWORD)
 
             #if the output contains the string "Can't decrypt correctly the VMK." it means the password supplied is wrong
             if [ "$PASSWORD_WRONG" = "0" ]
@@ -171,7 +171,7 @@ function mountDrive
         fi
     done
 
-    sudo ./util.sh "mount" $DRIVE_MOUNTPOINT
+    sudo ./util-root.sh "mount" $DRIVE_MOUNTPOINT
 
     #open the file browser on the mount point directory
     openFileBrowser
@@ -210,12 +210,12 @@ function actionMountDrive
 
 function actionUmountDrive
 {
-    sudo ./util.sh "umount" $DRIVE_MOUNTPOINT
+    sudo ./util-root.sh "umount" $DRIVE_MOUNTPOINT
 }
 
 function checkBitlockerDriveMounted
 {
-    echo $(sudo ./util.sh "checkBitLockerDriveMounted" $DRIVE_MOUNTPOINT)
+    echo $(sudo ./util-root.sh "checkBitLockerDriveMounted" $DRIVE_MOUNTPOINT)
 }
 
 checkDependencies
