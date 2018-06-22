@@ -2,10 +2,7 @@
 Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (https://github.com/Aorimn/dislocker)
 
 # Requirements
-1. dislocker-fuse
-1.1)For Ubuntu users: sudo apt install dislocker
-1.2)For Fedora users: sudo dnf install fuse-dislocker
-
+1. dislocker
 2. zenity
 
 
