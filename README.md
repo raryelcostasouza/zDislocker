@@ -1,5 +1,5 @@
 # dislocker-gui-zenity
-Zenity based GUI for mounting and umounting Bitlocker drives using dislocker
+Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (https://github.com/Aorimn/dislocker)
 
 # Installation instructions
 sudo ./install.sh
