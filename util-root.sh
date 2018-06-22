@@ -16,7 +16,7 @@
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #dislocker-gui-zenity
-#This util.sh script contains the commands used by the dislocker-gui-zenity.sh
+#This util-root.sh script contains the commands used by the dislocker-gui.sh
 #that need to be run as root user
 
 DFILE_LOCATION="/tmp/DFILE"
