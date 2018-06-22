@@ -1,9 +1,11 @@
 #!/bin/bash
 
+#Copyright (C) 2018 Raryel C. Souza <raryel.costa at gmail.com>
+
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
 #the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
+#any later version.
 
 #This program is distributed in the hope that it will be useful,
 #but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,6 +15,9 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#dislocker-gui-zenity
+#This util.sh script contains the commands used by the dislocker-gui-zenity.sh
+#that need to be run as root user
 
 DFILE_LOCATION="/tmp/DFILE"
 
