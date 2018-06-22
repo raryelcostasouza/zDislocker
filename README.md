@@ -9,13 +9,13 @@ Note: to enable non-admin users to mount/umount Bitlocker protected drives, duri
 # Screenshots
 
 # Bitlocker Drive Selection List
-![dislocker-gui-ss1](screenshots/drive-list.png?raw=true "Bitlocker Drive List")
+![dislocker-gui-ss1](screenshot/drive-list.png?raw=true "Bitlocker Drive List")
 
 # Password Input
-![dislocker-gui-ss2](screenshots/password-input.png?raw=true "Password Input")
+![dislocker-gui-ss2](screenshot/password-input.png?raw=true "Password Input")
 
 # Drive currently Mounted. Eject safely?
-![dislocker-gui-ss3](screenshots/drive-mounted-eject-safely.png?raw=true "Eject Safely")
+![dislocker-gui-ss3](screenshot/drive-mounted-eject-safely.png?raw=true "Eject Safely")
 
 
 ## License
