@@ -1,10 +1,10 @@
 # dislocker-gui-zenity
 Zenity based GUI for mounting and umounting Bitlocker drives using dislocker
 
-# Install instructions
+# Installation instructions
 sudo ./install.sh
 
-Note: to enable non-admin users to mount/umount Bitlocker protected drives, during the installation a rule is added to the /etc/sudoers file. This rule allow all users to execute the script util-root.sh (where the root commands needed for mounting/umounting are located). If you do not 
+Note: to enable non-admin users to mount/umount Bitlocker protected drives, by default, during the installation a rule is added to the /etc/sudoers file. This rule allow all users to execute the script util-root.sh (where the root commands needed for mounting/umounting are located).
 
 # Screenshots
 
