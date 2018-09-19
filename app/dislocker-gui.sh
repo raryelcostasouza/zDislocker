@@ -52,7 +52,7 @@ function checkDependencies
 
     if ! type dislocker-fuse > /dev/null
     then
-        zenity --error --title="Dislocker Not Found" --no-wrap --text="Missing dependency 'Dislocker'. Please install it before using this script.
+        errorMessage "Missing dependency 'Dislocker'. Please install it before using this script.
                                                             \n\nFor Ubuntu: sudo apt install dislocker
                                                             \n\nFor Fedora: sudo dnf install fuse-dislocker"
         exit;
