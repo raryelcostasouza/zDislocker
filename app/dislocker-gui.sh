@@ -171,7 +171,8 @@ function mountDrive
         fi
     done
 
-    sudo /opt/dislocker-gui/util-root.sh "mount" $DRIVE_MOUNTPOINT
+    (sudo /opt/dislocker-gui/util-root.sh "mount" $DRIVE_MOUNTPOINT) |
+        zenity --progress --pulsate --auto-close --text="Please wait...\nMounting BitLockerDrive..." --title="Mounting Drive..."
 
     #open the file browser on the mount point directory
     openFileBrowser
