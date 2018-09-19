@@ -212,7 +212,7 @@ function actionMountDrive
 function actionUmountDrive
 {
     (sudo /opt/dislocker-gui/util-root.sh "umount" $DRIVE_MOUNTPOINT) |
-        zenity --progress --pulsate --auto-close --text="Saving data... Please wait..."
+        zenity --progress --pulsate --auto-close --text="Please wait...\nSaving data..." --title="Saving Data..."
 
     //check if drive was successfully umounted
     if [ "$(checkBitlockerDriveMounted)" = "1" ]
