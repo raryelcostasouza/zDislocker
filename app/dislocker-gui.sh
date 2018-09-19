@@ -210,7 +210,16 @@ function actionMountDrive
 
 function actionUmountDrive
 {
-    sudo /opt/dislocker-gui/util-root.sh "umount" $DRIVE_MOUNTPOINT
+    (sudo /opt/dislocker-gui/util-root.sh "umount" $DRIVE_MOUNTPOINT) |
+        zenity --progress --pulsate --auto-close --text="Saving data... Please wait..."
+
+    //check if drive was successfully umounted
+    if [ "$(checkBitlockerDriveMounted)" = "1" ]
+    then
+        zenity --info --title="BitLockerDrive Ejected" --text="Now your BitLockerDrive can be removed safely"
+    else
+        errorMessage "Unable to eject BitLockerDrive.\nBefore trying to eject again, please close any opened file browser windows\nand make sure there are no files from the drive currently opened."
+    fi
 }
 
 function checkBitlockerDriveMounted
