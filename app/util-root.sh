@@ -19,8 +19,6 @@
 #This util-root.sh script contains the commands used by the dislocker-gui.sh
 #that need to be run as root user
 
-DFILE_LOCATION="/tmp/DFILE"
-
 ACTION=$1
 case $ACTION in
   "clearTMP")
@@ -39,21 +37,26 @@ case $ACTION in
       ;;
 
   "createMountDir")
-      DRIVE_MOUNTPOINT=$2
-      mkdir -p $DRIVE_MOUNTPOINT
+      MOUNT_POINT=$2
+      DFILE_LOCATION=$3
+      mkdir -p $MOUNT_POINT
       mkdir -p $DFILE_LOCATION
       ;;
 
   "decrypt")
       DRIVE_SELECTED=$2
       DRIVE_PASSWORD=$3
+      PATH_DISLOCKER_FILE=$4
       #if the output contains the string "Can't decrypt correctly the VMK." it means the password supplied is wrong
-      echo $(dislocker-fuse -v -V /dev/"$DRIVE_SELECTED" -u$DRIVE_PASSWORD -- $DFILE_LOCATION | grep -q "Can't decrypt correctly the VMK."; echo $?)
+      echo $(dislocker-fuse -v -V /dev/"$DRIVE_SELECTED" -u$DRIVE_PASSWORD -- $PATH_DISLOCKER_FILE | grep -q "Can't decrypt correctly the VMK."; echo $?)
       ;;
 
   "mount")
-      DRIVE_MOUNTPOINT=$2
-      mount -o loop,rw $DFILE_LOCATION/dislocker-file $DRIVE_MOUNTPOINT
+      DRIVE_SELECTED=$2
+      PATH_MOUNT_POINT=$3
+      PATH_DISLOCKER_FILE=$4
+
+      mount -o loop,rw $PATH_DISLOCKER_FILE/dislocker-file $PATH_MOUNT_POINT
       ;;
 
   "umount")

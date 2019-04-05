@@ -20,8 +20,26 @@
 
 DRIVE_MOUNTPOINT="/media/BitLockerDrive"
 
+function getPathMountPoint
+{
+    DRIVE_SELECTED=$2
+    DRIVE_MOUNTPOINT_BASE="/media/BitLockerDrive"
+
+    echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED"
+}
+
+function getPathDislockerFile
+{
+  DRIVE_SELECTED=$2
+  DFILE_LOCATION_BASE="/tmp/DFILE"
+
+  echo "$DFILE_LOCATION_BASE-$DRIVE_SELECTED"
+}
+
 function openFileBrowser
 {
+    PATH_MOUNT_POINT=$2
+
     if type nautilus > /dev/null
     then
         FILE_BROWSER="nautilus"
@@ -33,10 +51,10 @@ function openFileBrowser
         FILE_BROWSER="thunar"
     else
         zenity --info --title="File Browser Not Found"
-                      --text="Nautilus/Dolphin/Thunar not found\n\nOpen your file browser at $DRIVE_MOUNTPOINT"
+                      --text="Nautilus/Dolphin/Thunar not found\n\nOpen your file browser at $PATH_MOUNT_POINT"
         exit
     fi
-    $($FILE_BROWSER $DRIVE_MOUNTPOINT)
+    $($FILE_BROWSER $PATH_MOUNT_POINT)
 }
 
 function checkDependencies
@@ -146,9 +164,11 @@ function isBitlockerDrive
 
 function mountDrive
 {
-    DRIVE=$1
+    DRIVE_SELECTED=$1
+    PATH_MOUNT_POINT= getPathMountPoint $DRIVE_SELECTED
+    PATH_DISLOCKER_FILE= getPathDislockerFile $DRIVE_SELECTED
 
-    sudo /opt/dislocker-gui/util-root.sh "createMountDir" $DRIVE_MOUNTPOINT
+    sudo /opt/dislocker-gui/util-root.sh "createMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
 
     #loop until the user supplies a valid password
     PASSWORD_WRONG=0
@@ -159,7 +179,7 @@ function mountDrive
         if [ -n "$DRIVE_PASSWORD" ]
         then
             #try to unlock the drive
-            PASSWORD_WRONG=$(sudo /opt/dislocker-gui/util-root.sh "decrypt" $DRIVE $DRIVE_PASSWORD)
+            PASSWORD_WRONG=$(sudo /opt/dislocker-gui/util-root.sh "decrypt" $DRIVE_SELECTED $DRIVE_PASSWORD $PATH_DISLOCKER_FILE)
 
             #if the output contains the string "Can't decrypt correctly the VMK." it means the password supplied is wrong
             if [ "$PASSWORD_WRONG" = "0" ]
@@ -171,11 +191,11 @@ function mountDrive
         fi
     done
 
-    (sudo /opt/dislocker-gui/util-root.sh "mount" $DRIVE_MOUNTPOINT) |
-        zenity --progress --pulsate --auto-close --text="Please wait...\nMounting BitLockerDrive..." --title="Mounting Drive..."
+    (sudo /opt/dislocker-gui/util-root.sh "mount" $DRIVE_SELECTED $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE) |
+        zenity --progress --pulsate --auto-close --text="Please wait...\nMounting BitLockerDrive..." --title="Mounting Drive $DRIVE_SELECTED..."
 
     #open the file browser on the mount point directory
-    openFileBrowser
+    openFileBrowser $PATH_MOUNT_POINT
   }
 
 function actionMountDrive
