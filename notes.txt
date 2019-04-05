@@ -1,0 +1,2 @@
+Installer parameter option. All users without password or only admin without password. If second case need to see how to write the sudoers rule
+Installer to add exception on sudoers file
