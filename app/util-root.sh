@@ -27,7 +27,7 @@ case $ACTION in
       rm -f /tmp/drive_selection_list-not_mounted.txt
       ;;
 
-  "checkBitLockerDriveMounted")
+  "isDriveMounted")
       DRIVE_MOUNTPOINT=$2
       echo $(mount | grep -q "$DRIVE_MOUNTPOINT\|$DFILE_LOCATION"; echo $?)
       ;;
