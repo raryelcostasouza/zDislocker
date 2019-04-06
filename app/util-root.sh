@@ -28,8 +28,10 @@ case $ACTION in
       ;;
 
   "isDriveMounted")
-      DRIVE_MOUNTPOINT=$2
-      echo $(mount | grep -q "$DRIVE_MOUNTPOINT\|$DFILE_LOCATION"; echo $?)
+      PATH_MOUNT_POINT=$2
+      PATH_DISLOCKER_FILE=$3
+
+      echo $(mount | grep -q "$PATH_MOUNT_POINT\|$PATH_DISLOCKER_FILE"; echo $?)
       ;;
 
   "isBitlockerDrive")
