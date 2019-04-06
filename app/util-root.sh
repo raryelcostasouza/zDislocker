@@ -23,7 +23,8 @@ ACTION=$1
 case $ACTION in
   "clearTMP")
       rm -f /tmp/fdisk.txt
-      rm -f /tmp/drive_selection_list.txt
+      rm -f /tmp/drive_selection_list-mounted.txt
+      rm -f /tmp/drive_selection_list-not_mounted.txt
       ;;
 
   "checkBitLockerDriveMounted")
