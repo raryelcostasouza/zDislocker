@@ -16,7 +16,7 @@
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #dislocker-gui
-#Zenity based GUI for mounting and umounting Bitlocker drives using dislocker
+#Zenity based GUI for mounting and unmounting Bitlocker drives using dislocker
 
 DRIVE_MOUNTPOINT="/media/BitLockerDrive"
 
