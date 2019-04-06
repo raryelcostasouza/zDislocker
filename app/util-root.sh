@@ -69,7 +69,7 @@ case $ACTION in
       ;;
 
   "getListSupportedDrives")
-      #get list of NTFS/exFAT/HPFS drives and saves the list to the temp file
+      #get list of NTFS/exFAT/HPFS/FAT drives and saves the list to the temp file
       fdisk -l | grep 'FAT32\|NTFS' | cut -c6-9 > /tmp/fdisk.txt
     ;;
 esac
