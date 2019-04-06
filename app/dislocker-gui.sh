@@ -95,8 +95,8 @@ function getListSupportedDrives
 
 function getSelectionListBitlockerDrive
 {
-    #get list of NTFS/exFAT/HPFS drives and saves the list to the temp file
-    getListNTFSDrives
+    getSelectionListBitlockerDrives "mounted"
+}
 
     #if there are any ntfs/exFAT/HPFS drives attached
     if [ -f "/tmp/fdisk.txt" ]
