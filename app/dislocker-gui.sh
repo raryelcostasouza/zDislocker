@@ -88,9 +88,9 @@ function errorMessage
     zenity --error --title="Error" --no-wrap --text="$1"
 }
 
-function getListNTFSDrives
+function getListSupportedDrives
 {
-    sudo /opt/dislocker-gui/util-root.sh "getListNTFSDrives"
+    sudo /opt/dislocker-gui/util-root.sh "getListSupportedDrives"
 }
 
 function getSelectionListBitlockerDrive
