@@ -93,10 +93,22 @@ function getListSupportedDrives
     sudo /opt/dislocker-gui/util-root.sh "getListSupportedDrives"
 }
 
-function getSelectionListBitlockerDrive
+function getMountedBitlockerDrives
 {
     getSelectionListBitlockerDrives "mounted"
 }
+
+function getNotMountedBitlockerDrives
+{
+  getSelectionListBitlockerDrives "not_mounted"
+}
+
+function getSelectionListBitlockerDrives
+{
+    STATUS=$2
+
+    #get list of NTFS/exFAT/HPFS/FAT drives and saves the list to the temp file
+    getListSupportedDrives
 
     #if there are any ntfs/exFAT/HPFS drives attached
     if [ -f "/tmp/fdisk.txt" ]
@@ -110,8 +122,14 @@ function getSelectionListBitlockerDrive
                 size=$(getDiskSizeGB $drive)
                 brandNModel=$(getDiskBrandNModel $drive)
 
-                #creates a table for the drive selection interface. FALSE indicates that the option is by default not selected on the gui
-                echo "FALSE $drive $brandNModel $size" >> /tmp/drive_selection_list.txt
+                #if the parameter is MOUNTED... only add mounted drives to list
+                #if the parameter is NOT_MOUNTED... only add not mounted drives to the list
+                if [ [ $STATUS = "mounted" ] && [ $(isDriveMounted $drive) ] ] ||
+                  [ [ $STATUS = "not_mounted" ] && ! [ $(isDriveMounted $drive) ] ]
+                then
+                  #creates a table for the drive selection interface. FALSE indicates that the option is by default not selected on the gui
+                  echo "FALSE $drive $brandNModel $size" >> /tmp/drive_selection_list-$STATUS.txt
+                fi
             fi
         done
     else
@@ -196,72 +214,88 @@ function mountDrive
 
     #open the file browser on the mount point directory
     openFileBrowser $PATH_MOUNT_POINT
-  }
-
-function actionMountDrive
-{
-    clearTMPFiles
-
-    getSelectionListBitlockerDrive
-
-    #if there is any valid bitlocker drive
-    if [ -f "/tmp/drive_selection_list.txt" ]
-    then
-        DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list.txt)
-        DRIVE_SELECTED=$(zenity --list --title="BitLocker Drive List" \
-                                --text="Select the Bitlocker drive to be mounted:" \
-                                --radiolist --multiple \
-                                --width="450" \
-                                --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
-                                $DRIVE_SELECT_LIST)
-
-        #if a drive was selected
-        if [ -n "$DRIVE_SELECTED" ]
-        then
-            mountDrive $DRIVE_SELECTED
-        else
-            errorMessage "No Bitlocker drive selected!"
-        fi
-        clearTMPFiles
-    else
-        errorBitlockerDriveNotFound
-    fi
-
 }
 
-function actionUmountDrive
+function unmountDrive
 {
-    (sudo /opt/dislocker-gui/util-root.sh "umount" $DRIVE_MOUNTPOINT) |
-        zenity --progress --pulsate --auto-close --text="Please wait...\nSaving data..." --title="Saving Data..."
+  (sudo /opt/dislocker-gui/util-root.sh "unmount" $DRIVE_MOUNTPOINT) |
+      zenity --progress --pulsate --auto-close --text="Please wait...\nSaving data..." --title="Saving Data..."
 
-    //check if drive was successfully umounted
-    if [ "$(checkBitlockerDriveMounted)" = "1" ]
-    then
-        zenity --info --title="BitLockerDrive Ejected" --text="Now your BitLockerDrive can be removed safely"
-    else
-        errorMessage "Unable to eject BitLockerDrive.\nBefore trying to eject again, please close any opened file browser windows\nand make sure there are no files from the drive currently opened."
-    fi
+  //check if drive was successfully unmounted
+  if [ "$(isDriveMounted)" = "1" ]
+  then
+      zenity --info --title="BitLockerDrive Ejected" --text="Now your BitLockerDrive can be removed safely"
+  else
+      errorMessage "Unable to eject BitLockerDrive.\nBefore trying to eject again, please close any opened file browser windows\nand make sure there are no files from the drive currently opened."
+  fi
 }
 
-function checkBitlockerDriveMounted
+function windowSelectDrive
 {
-    echo $(sudo /opt/dislocker-gui/util-root.sh "checkBitLockerDriveMounted" $DRIVE_MOUNTPOINT)
+  ACTION=$2
+
+  if [ "$ACTION" = "mount" ]
+  then
+    TITLE="BitLocker Drive List"
+    TEXT="Select the Bitlocker drive to be mounted:"
+    OK_LABEL="Mount Drive"
+    SUFFIX_TMP_FILE="mounted"
+  else
+    TITLE="Currently mounted Bitlocker drives"
+    TEXT="Select the Bitlocker drive to be unmounted:"
+    OK_LABEL="Unmount Drive"
+    SUFFIX_TMP_FILE="not_mounted"
+  fi
+
+  clearTMPFiles
+
+  getSelectionListBitlockerDrives
+
+  #if there is any valid bitlocker drive
+  if [ -f "/tmp/drive_selection_list-$SUFFIX_TMP_FILE.txt" ]
+  then
+      DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list.txt)
+      DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
+                              --text="$TEXT" \
+                              --radiolist \
+                              --width="450" \
+                              --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
+                              --ok-label="$OK_LABEL" \
+                              $DRIVE_SELECT_LIST)
+
+      #if a drive was selected
+      if [ -n "$DRIVE_SELECTED" ] && [ $ACTION = "mount"]
+      then
+          mountDrive $DRIVE_SELECTED
+      elif [ -n "$DRIVE_SELECTED" ] && [ $ACTION = "mount"]
+      then
+          unmountDrive $DRIVE_SELECTED
+      else
+          errorMessage "No Bitlocker drive selected!"
+      fi
+      clearTMPFiles
+  else
+      errorBitlockerDriveNotFound
+  fi
+}
+
+function mainWindow
+{
+    ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity" \
+                    --text="Mount/Unmount Bitlocker encrypted drives.\nWhat would you like to do?" \
+                    --column="What would you like to do?" 'Mount' 'Unmount')
+
+    windowSelectDrive $ACTION_SELECTED
+}
+
+function isDriveMounted
+{
+    DRIVE=$2
+
+    PATH_MOUNT_POINT= getPathMountPoint $DRIVE
+    PATH_DISLOCKER_FILE= getPathDislockerFile $DRIVE
+    echo $(sudo /opt/dislocker-gui/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
 }
 
 checkDependencies
-
-#check if there is any bitlocker drive currently mounted
-if [ "$(checkBitlockerDriveMounted)" = "0" ]
-then
-    zenity --question --title="Bitlocker Drive already mounted" --no-wrap \
-                      --text="There is a Bitlocker drive currently mounted.\n\nWhat would you like to do?" \
-                      --ok-label="Remove it safely" --cancel-label="Nothing"
-
-    #if the user clicked the ok button (Remove it Safely)
-    if [ "$?" = "0" ]
-    then
-        actionUmountDrive
-    fi
-else
-    actionMountDrive
-fi
+mainWindow
