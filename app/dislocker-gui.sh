@@ -193,13 +193,20 @@ function isBitlockerDrive
     echo $(sudo /opt/dislocker-gui/util-root.sh "isBitlockerDrive" $DRIVE)
 }
 
+function createMountDirs
+{
+  PATH_MOUNT_POINT=$1
+  PATH_DISLOCKER_FILE=$2
+  sudo /opt/dislocker-gui/util-root.sh "createMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
+}
+
 function mountDrive
 {
     DRIVE_SELECTED=$1
-    PATH_MOUNT_POINT= getPathMountPoint $DRIVE_SELECTED
-    PATH_DISLOCKER_FILE= getPathDislockerFile $DRIVE_SELECTED
+    PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE_SELECTED)
+    PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE_SELECTED)
 
-    sudo /opt/dislocker-gui/util-root.sh "createMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
+    createMountDirs $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
 
     #loop until the user supplies a valid password
     PASSWORD_WRONG=0
