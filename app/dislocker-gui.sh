@@ -18,7 +18,6 @@
 #dislocker-gui
 #Zenity based GUI for mounting and unmounting Bitlocker drives using dislocker
 
-DRIVE_MOUNTPOINT="/media/BitLockerDrive"
 
 function getPathMountPoint
 {
