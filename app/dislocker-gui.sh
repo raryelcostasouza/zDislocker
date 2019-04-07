@@ -307,18 +307,26 @@ function windowSelectDrive
 function mainWindow
 {
     ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity" \
-                    --text="Mount/Unmount Bitlocker encrypted drives.\nWhat would you like to do?" \
-                    --column="What would you like to do?" 'Mount' 'Unmount')
+                    --text="Mount/Unmount BitLocker encrypted drives." \
+                    --column="What would you like to do?" 'Mount' 'Unmount' \
+                    --height=250)
 
-    windowSelectDrive $ACTION_SELECTED
+
+    #only do something if mount/umount clicked
+    #if click cancel or close window do nothing
+    if [ -n "$ACTION_SELECTED" ]
+    then
+      windowSelectDrive $ACTION_SELECTED
+    fi
 }
 
 function isDriveMounted
 {
     DRIVE=$1
 
-    PATH_MOUNT_POINT= getPathMountPoint $DRIVE
-    PATH_DISLOCKER_FILE= getPathDislockerFile $DRIVE
+    PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE)
+    PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE)
+
     echo $(sudo /opt/dislocker-gui/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
 }
 
