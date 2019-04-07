@@ -21,7 +21,7 @@
 
 function getPathMountPoint
 {
-    DRIVE_SELECTED=$2
+    DRIVE_SELECTED=$1
     DRIVE_MOUNTPOINT_BASE="/mnt/BitLockerDrive"
 
     echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED"
@@ -29,7 +29,7 @@ function getPathMountPoint
 
 function getPathDislockerFile
 {
-  DRIVE_SELECTED=$2
+  DRIVE_SELECTED=$1
   DFILE_LOCATION_BASE="/tmp/DFILE"
 
   echo "$DFILE_LOCATION_BASE-$DRIVE_SELECTED"
@@ -37,7 +37,7 @@ function getPathDislockerFile
 
 function openFileBrowser
 {
-    PATH_MOUNT_POINT=$2
+    PATH_MOUNT_POINT=$1
 
     if type nautilus > /dev/null
     then
@@ -104,7 +104,7 @@ function getNotMountedBitlockerDrives
 
 function getSelectionListBitlockerDrives
 {
-    STATUS=$2
+    STATUS=$1
 
     #get list of NTFS/exFAT/HPFS/FAT drives and saves the list to the temp file
     getListSupportedDrives
@@ -231,7 +231,7 @@ function unmountDrive
 
 function windowSelectDrive
 {
-  ACTION=$2
+  ACTION=$1
 
   if [ "$ACTION" = "mount" ]
   then
@@ -289,7 +289,7 @@ function mainWindow
 
 function isDriveMounted
 {
-    DRIVE=$2
+    DRIVE=$1
 
     PATH_MOUNT_POINT= getPathMountPoint $DRIVE
     PATH_DISLOCKER_FILE= getPathDislockerFile $DRIVE
