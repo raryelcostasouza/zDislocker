@@ -24,7 +24,7 @@ function getPathMountPoint
     DRIVE_SELECTED=$1
     DRIVE_MOUNTPOINT_BASE="/mnt/BitLockerDrive"
 
-    echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED"
+    echo $(echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED")
 }
 
 function getPathDislockerFile
@@ -32,7 +32,7 @@ function getPathDislockerFile
   DRIVE_SELECTED=$1
   DFILE_LOCATION_BASE="/tmp/DFILE"
 
-  echo "$DFILE_LOCATION_BASE-$DRIVE_SELECTED"
+  echo $(echo $DFILE_LOCATION_BASE-$DRIVE_SELECTED)
 }
 
 function openFileBrowser
