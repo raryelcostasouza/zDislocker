@@ -131,12 +131,21 @@ function getSelectionListBitlockerDrives
                    [[ ( $STATUS = "unmounted" ) && ("$DRIVE_MOUNTED" = "1") ]]
                 then
                   #creates a table for the drive selection interface. FALSE indicates that the option is by default not selected on the gui
+                  DRIVE_FOUND=1
                   echo "FALSE $drive $brandNModel $size" >> /tmp/drive_selection_list-$STATUS.txt
                 fi
             fi
         done
+
+        #if no drive found with the desired status (mounted/unmounted) close the app
+        if !(($DRIVE_FOUND))
+        then
+          errorBitlockerDriveNotFound $STATUS
+          exit 1
+        fi
     else
-        errorBitlockerDriveNotFound
+        #if no bitlocker drive found close the app
+        errorBitlockerDriveNotFound ""
         exit 1
     fi
 
