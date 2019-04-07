@@ -24,7 +24,7 @@ case $ACTION in
   "clearTMP")
       rm -f /tmp/fdisk.txt
       rm -f /tmp/drive_selection_list-mounted.txt
-      rm -f /tmp/drive_selection_list-not_mounted.txt
+      rm -f /tmp/drive_selection_list-unmounted.txt
       ;;
 
   "isDriveMounted")
