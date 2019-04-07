@@ -229,7 +229,8 @@ function mountDrive
         fi
     done
 
-    (sudo /opt/dislocker-gui/util-root.sh "mount" $DRIVE_SELECTED $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE) |
+    ID_MAIN_USER_GROUP=$(id -g)
+    (sudo /opt/dislocker-gui/util-root.sh "mount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE $UID $ID_MAIN_USER_GROUP) |
         zenity --progress --pulsate --auto-close --text="Please wait...\nMounting BitLockerDrive..." --title="Mounting Drive $DRIVE_SELECTED..."
 
     #open the file browser on the mount point directory
