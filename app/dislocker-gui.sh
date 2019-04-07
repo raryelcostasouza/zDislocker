@@ -239,11 +239,15 @@ function mountDrive
 
 function unmountDrive
 {
-  (sudo /opt/dislocker-gui/util-root.sh "unmount" $DRIVE_MOUNTPOINT) |
+  DRIVE_SELECTED=$1
+  PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE_SELECTED)
+  PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE_SELECTED)
+
+  (sudo /opt/dislocker-gui/util-root.sh "unmount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE) |
       zenity --progress --pulsate --auto-close --text="Please wait...\nSaving data..." --title="Saving Data..."
 
-  //check if drive was successfully unmounted
-  if [ "$(isDriveMounted)" = "1" ]
+  #check if drive status changed to unmounted (ejected successfully)
+  if [ "$(isDriveMounted $DRIVE_SELECTED)" = "1" ]
   then
       zenity --info --title="BitLockerDrive Ejected" --text="Now your BitLockerDrive can be removed safely"
   else
