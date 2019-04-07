@@ -55,11 +55,11 @@ case $ACTION in
       ;;
 
   "mount")
-      DRIVE_SELECTED=$2
-      PATH_MOUNT_POINT=$3
-      PATH_DISLOCKER_FILE=$4
-
-      mount -o loop,rw $PATH_DISLOCKER_FILE/dislocker-file $PATH_MOUNT_POINT
+      PATH_MOUNT_POINT=$2
+      PATH_DISLOCKER_FILE=$3
+      USER_ID=$4
+      GROUP_ID=$5
+      mount -o loop,rw,uid=$USER_ID,gid=$GROUP_ID $PATH_DISLOCKER_FILE/dislocker-file $PATH_MOUNT_POINT
       ;;
 
   "umount")
