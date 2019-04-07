@@ -48,9 +48,12 @@ function openFileBrowser
     elif type thunar > /dev/null
     then
         FILE_BROWSER="thunar"
+    elif type nemo > /dev/null
+    then
+      FILE_BROWSER="nemo"
     else
         zenity --info --title="File Browser Not Found"
-                      --text="Nautilus/Dolphin/Thunar not found\n\nOpen your file browser at $PATH_MOUNT_POINT"
+                      --text="Nautilus/Dolphin/Thunar/Nemo not found\n\nOpen your file browser at $PATH_MOUNT_POINT"
         exit
     fi
     $($FILE_BROWSER $PATH_MOUNT_POINT)
