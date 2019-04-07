@@ -62,10 +62,11 @@ case $ACTION in
       mount -o loop,rw,uid=$USER_ID,gid=$GROUP_ID $PATH_DISLOCKER_FILE/dislocker-file $PATH_MOUNT_POINT
       ;;
 
-  "umount")
-      DRIVE_MOUNTPOINT=$2
-      umount $DRIVE_MOUNTPOINT
-      umount $DFILE_LOCATION
+  "unmount")
+      PATH_MOUNT_POINT=$2
+      PATH_DISLOCKER_FILE=$3
+      umount $PATH_MOUNT_POINT
+      umount $PATH_DISLOCKER_FILE
       ;;
 
   "getListSupportedDrives")
