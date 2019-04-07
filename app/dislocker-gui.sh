@@ -124,10 +124,11 @@ function getSelectionListBitlockerDrives
                 size=$(getDiskSizeGB $drive)
                 brandNModel=$(getDiskBrandNModel $drive)
 
+                DRIVE_MOUNTED=$(isDriveMounted $drive)
                 #if the parameter is MOUNTED... only add mounted drives to list
                 #if the parameter is NOT_MOUNTED... only add not mounted drives to the list
-                if [ [ $STATUS = "mounted" ] && [ $(isDriveMounted $drive) ] ] ||
-                  [ [ $STATUS = "not_mounted" ] && ! [ $(isDriveMounted $drive) ] ]
+                if [[ ( $STATUS = "mounted" ) && ("$DRIVE_MOUNTED" = "0") ]] ||
+                   [[ ( $STATUS = "unmounted" ) && ("$DRIVE_MOUNTED" = "1") ]]
                 then
                   #creates a table for the drive selection interface. FALSE indicates that the option is by default not selected on the gui
                   echo "FALSE $drive $brandNModel $size" >> /tmp/drive_selection_list-$STATUS.txt
