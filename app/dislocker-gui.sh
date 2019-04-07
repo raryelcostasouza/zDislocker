@@ -102,7 +102,7 @@ function getMountedBitlockerDrives
 
 function getNotMountedBitlockerDrives
 {
-  getSelectionListBitlockerDrives "not_mounted"
+  getSelectionListBitlockerDrives "unmounted"
 }
 
 function getSelectionListBitlockerDrives
