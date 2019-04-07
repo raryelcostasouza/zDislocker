@@ -113,6 +113,7 @@ function getSelectionListBitlockerDrives
     #if there are any ntfs/exFAT/HPFS drives attached
     if [ -f "/tmp/fdisk.txt" ]
     then
+        DRIVE_FOUND=0
         #for each candidate drive test if it is a bitlocker drive
         for drive in $(cat /tmp/fdisk.txt)
         do
