@@ -153,7 +153,8 @@ function getSelectionListBitlockerDrives
 
 function errorBitlockerDriveNotFound
 {
-    errorMessage "No Bitlocker drives found!"
+    STATUS=$1
+    errorMessage "No $STATUS Bitlocker drives found!"
 }
 
 function getDiskFromPartition
