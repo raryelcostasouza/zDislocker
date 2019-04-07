@@ -22,7 +22,7 @@
 function getPathMountPoint
 {
     DRIVE_SELECTED=$2
-    DRIVE_MOUNTPOINT_BASE="/media/BitLockerDrive"
+    DRIVE_MOUNTPOINT_BASE="/mnt/BitLockerDrive"
 
     echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED"
 }
