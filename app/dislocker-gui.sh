@@ -259,49 +259,43 @@ function windowSelectDrive
 {
   ACTION=$1
 
-  if [ "$ACTION" = "mount" ]
+  clearTMPFiles
+  if [ "$ACTION" = "Mount" ]
   then
     TITLE="BitLocker Drive List"
     TEXT="Select the Bitlocker drive to be mounted:"
     OK_LABEL="Mount Drive"
-    SUFFIX_TMP_FILE="mounted"
+    SUFFIX_TMP_FILE="unmounted"
+    getNotMountedBitlockerDrives
   else
     TITLE="Currently mounted Bitlocker drives"
     TEXT="Select the Bitlocker drive to be unmounted:"
     OK_LABEL="Unmount Drive"
-    SUFFIX_TMP_FILE="not_mounted"
+    SUFFIX_TMP_FILE="mounted"
+    getMountedBitlockerDrives
   fi
 
+  DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list-"$SUFFIX_TMP_FILE".txt)
+  DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
+                          --text="$TEXT" \
+                          --radiolist \
+                          --width="450" \
+                          --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
+                          --ok-label="$OK_LABEL" \
+                          $DRIVE_SELECT_LIST)
+
+  #if a drive was selected
+  if [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Mount" ]]
+  then
+      mountDrive $DRIVE_SELECTED
+  elif [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Unmount" ]]
+  then
+      unmountDrive $DRIVE_SELECTED
+  else
+      errorMessage "No Bitlocker drive selected!"
+  fi
   clearTMPFiles
 
-  getSelectionListBitlockerDrives
-
-  #if there is any valid bitlocker drive
-  if [ -f "/tmp/drive_selection_list-$SUFFIX_TMP_FILE.txt" ]
-  then
-      DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list.txt)
-      DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
-                              --text="$TEXT" \
-                              --radiolist \
-                              --width="450" \
-                              --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
-                              --ok-label="$OK_LABEL" \
-                              $DRIVE_SELECT_LIST)
-
-      #if a drive was selected
-      if [ -n "$DRIVE_SELECTED" ] && [ $ACTION = "mount"]
-      then
-          mountDrive $DRIVE_SELECTED
-      elif [ -n "$DRIVE_SELECTED" ] && [ $ACTION = "mount"]
-      then
-          unmountDrive $DRIVE_SELECTED
-      else
-          errorMessage "No Bitlocker drive selected!"
-      fi
-      clearTMPFiles
-  else
-      errorBitlockerDriveNotFound
-  fi
 }
 
 function mainWindow
