@@ -18,7 +18,6 @@
 #dislocker-gui
 #Zenity based GUI for mounting and unmounting Bitlocker drives using dislocker
 
-
 function getPathMountPoint
 {
     DRIVE_SELECTED=$1
@@ -108,7 +107,6 @@ function getNotMountedBitlockerDrives
 function getSelectionListBitlockerDrives
 {
     STATUS=$1
-
     #get list of NTFS/exFAT/HPFS/FAT drives and saves the list to the temp file
     getListSupportedDrives
 
