@@ -165,12 +165,9 @@ function getDiskFromPartition
 function getDiskSizeGB
 {
     PARTITION=$1
-    DISK=$(getDiskFromPartition $PARTITION)
 
-    sectors=$(cat /sys/block/$DISK/size)
-    sectorSize=$(cat /sys/block/$DISK/queue/logical_block_size)
     #get the size of the disk in GB
-    echo $(echo "scale=2;(($sectors * $sectorSize * 1.0)/(1024*1024*1024.0))" | bc)"GB"
+    lsblk /dev/$PARTITION -n -o SIZE
 }
 
 function getDiskBrandNModel
