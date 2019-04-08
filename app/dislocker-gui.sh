@@ -270,7 +270,7 @@ function windowOperationSuccess
   MESSAGE=$2
 
   zenity --question --title="$TITLE" --no-wrap \
-                      --text="$MESSAGE \n\What would you like to do?" \
+                      --text="$MESSAGE \n\nWhat would you like to do?" \
                       --ok-label="Mount/Unmount another drive" --cancel-label="Close"
 
   #if the user clicks the close button or close the window
