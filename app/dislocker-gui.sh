@@ -268,7 +268,7 @@ function windowOperationSuccess
 {
   TITLE=$1
   MESSAGE=$2
-  $TYPE=$3
+
   zenity --question --title="$TITLE" --no-wrap \
                       --text="$MESSAGE \n\What would you like to do?" \
                       --ok-label="Mount/Unmount another drive" --cancel-label="Close"
