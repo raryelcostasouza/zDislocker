@@ -46,6 +46,16 @@ case $ACTION in
       mkdir -p $DFILE_LOCATION
       ;;
 
+  "clearMountDir")
+      MOUNT_POINT=$2
+      DFILE_LOCATION=$3
+
+      #after unmounting
+      #only deletes the directory if it is completely empty
+      rmdir $MOUNT_POINT
+      rmdir $DFILE_LOCATION
+      ;;
+
   "decrypt")
       DRIVE_SELECTED=$2
       DRIVE_PASSWORD=$3
@@ -67,11 +77,6 @@ case $ACTION in
       PATH_DISLOCKER_FILE=$3
       umount $PATH_MOUNT_POINT
       umount $PATH_DISLOCKER_FILE
-
-      #after unmounting
-      #only deletes the directory if it is completely empty
-      rmdir $PATH_MOUNT_POINT
-      rmdir $PATH_DISLOCKER_FILE
       ;;
 
   "getListSupportedDrives")

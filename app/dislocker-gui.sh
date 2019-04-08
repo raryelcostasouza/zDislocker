@@ -254,6 +254,8 @@ function unmountDrive
   #check if drive status changed to unmounted (ejected successfully)
   if [ "$(isDriveMounted $DRIVE_SELECTED)" = "1" ]
   then
+      #after drive ejected remove empty mount directories
+      (sudo /opt/dislocker-gui/util-root.sh "clearMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
       TITLE="BitLockerDrive Ejected"
       MSG="Now your BitLockerDrive can be removed safely."
       windowOperationSuccess "$TITLE" "$MSG"
