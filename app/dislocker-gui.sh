@@ -38,6 +38,7 @@ function openFileBrowser
 {
     PATH_MOUNT_POINT=$1
 
+    SUPPORTED_FILE_BROWSER_NOT_FOUND=0
     if type nautilus > /dev/null
     then
         FILE_BROWSER="nautilus"
@@ -51,11 +52,14 @@ function openFileBrowser
     then
       FILE_BROWSER="nemo"
     else
+        SUPPORTED_FILE_BROWSER_NOT_FOUND=1
         zenity --info --title="File Browser Not Found"
                       --text="Nautilus/Dolphin/Thunar/Nemo not found\n\nOpen your file browser at $PATH_MOUNT_POINT"
-        exit
     fi
-    $($FILE_BROWSER $PATH_MOUNT_POINT)
+    if !(($SUPPORTED_FILE_BROWSER_NOT_FOUND))
+    then
+      $($FILE_BROWSER $PATH_MOUNT_POINT)
+    fi
 }
 
 function checkDependencies
