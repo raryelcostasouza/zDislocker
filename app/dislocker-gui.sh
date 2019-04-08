@@ -101,12 +101,12 @@ function getListSupportedDrives
 
 function getMountedBitlockerDrives
 {
-    getSelectionListBitlockerDrives "mounted"
+    echo $(getSelectionListBitlockerDrives "mounted")
 }
 
 function getNotMountedBitlockerDrives
 {
-  getSelectionListBitlockerDrives "unmounted"
+  echo $(getSelectionListBitlockerDrives "unmounted")
 }
 
 function getSelectionListBitlockerDrives
@@ -145,14 +145,13 @@ function getSelectionListBitlockerDrives
         if !(($DRIVE_FOUND))
         then
           errorBitlockerDriveNotFound $STATUS
-          exit 1
         fi
     else
         #if no bitlocker drive found close the app
         errorBitlockerDriveNotFound ""
-        exit 1
-    fi
 
+    fi
+    echo $DRIVE_FOUND
 }
 
 function errorBitlockerDriveNotFound
@@ -283,43 +282,55 @@ function windowSelectDrive
 {
   ACTION=$1
 
+  STATUS=""
   clearTMPFiles
   if [ "$ACTION" = "Mount" ]
   then
     TITLE="BitLocker Drive List"
     TEXT="Select the Bitlocker drive to be mounted:"
     OK_LABEL="Mount Drive"
+
+    #before mounting a drive the app loads a list of currently unmounted drives
     SUFFIX_TMP_FILE="unmounted"
-    getNotMountedBitlockerDrives
+
+    DRIVE_FOUND=$(getNotMountedBitlockerDrives)
   else
     TITLE="Currently mounted Bitlocker drives"
     TEXT="Select the Bitlocker drive to be unmounted:"
     OK_LABEL="Unmount Drive"
+
+    #before unmounting a drive the app loads a list of currently mounted drives
     SUFFIX_TMP_FILE="mounted"
-    getMountedBitlockerDrives
+
+    DRIVE_FOUND=$(getMountedBitlockerDrives)
   fi
 
-  DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list-"$SUFFIX_TMP_FILE".txt)
-  DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
-                          --text="$TEXT" \
-                          --radiolist \
-                          --width="450" \
-                          --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
-                          --ok-label="$OK_LABEL" \
-                          $DRIVE_SELECT_LIST)
+  #if at least one drive was found
+  if [ "$DRIVE_FOUND" != "0" ]
+  then
 
-  #if a drive was selected
-  if [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Mount" ]]
-  then
-      mountDrive $DRIVE_SELECTED
-  elif [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Unmount" ]]
-  then
-      unmountDrive $DRIVE_SELECTED
-  else
-      errorMessage "No Bitlocker drive selected!"
+    #show the list of drives for user selection
+    DRIVE_SELECT_LIST=$(cat /tmp/drive_selection_list-"$SUFFIX_TMP_FILE".txt)
+    DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
+                            --text="$TEXT" \
+                            --radiolist \
+                            --width="450" \
+                            --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
+                            --ok-label="$OK_LABEL" \
+                            $DRIVE_SELECT_LIST)
+
+    #if a drive was selected
+    if [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Mount" ]]
+    then
+        mountDrive $DRIVE_SELECTED
+    elif [[ -n "$DRIVE_SELECTED" ]] && [[ $ACTION = "Unmount" ]]
+    then
+        unmountDrive $DRIVE_SELECTED
+    else
+        errorMessage "No Bitlocker drive selected!"
+    fi
+    clearTMPFiles
   fi
-  clearTMPFiles
-
 }
 
 function mainWindow
