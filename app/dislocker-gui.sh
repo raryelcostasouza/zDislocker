@@ -159,7 +159,7 @@ function errorBitlockerDriveNotFound
 function getDiskFromPartition
 {
     PARTITION=$1
-    echo $(echo $PARTITION | cut -c1-3)
+    echo $PARTITION | cut -c1-3
 }
 
 function getDiskSizeGB
