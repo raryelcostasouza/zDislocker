@@ -34,7 +34,7 @@ case $ACTION in
       echo $(mount | grep -q "$PATH_MOUNT_POINT\|$PATH_DISLOCKER_FILE"; echo $?)
       ;;
 
-  "isBitlockerDrive")
+  "isBitLockerDrive")
       DRIVE=$2
       echo $(dislocker-fuse -r -V "/dev/$DRIVE" | grep -q "None of the provided decryption mean is decrypting the keys."; echo $?)
       ;;

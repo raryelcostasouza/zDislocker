@@ -16,7 +16,7 @@
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #dislocker-gui
-#Zenity based GUI for mounting and unmounting Bitlocker drives using dislocker
+#Zenity based GUI for mounting and unmounting BitLocker drives using dislocker
 
 function getPathMountPoint
 {
@@ -100,17 +100,17 @@ function getListSupportedDrives
     sudo /opt/dislocker-gui/util-root.sh "getListSupportedDrives"
 }
 
-function getMountedBitlockerDrives
+function getMountedBitLockerDrives
 {
-    echo $(getSelectionListBitlockerDrives "mounted")
+    echo $(getSelectionListBitLockerDrives "mounted")
 }
 
-function getNotMountedBitlockerDrives
+function getNotMountedBitLockerDrives
 {
-  echo $(getSelectionListBitlockerDrives "unmounted")
+  echo $(getSelectionListBitLockerDrives "unmounted")
 }
 
-function getSelectionListBitlockerDrives
+function getSelectionListBitLockerDrives
 {
     STATUS=$1
     #get list of NTFS/exFAT/HPFS/FAT drives and saves the list to the temp file
@@ -124,7 +124,7 @@ function getSelectionListBitlockerDrives
         for drive in $(cat /tmp/fdisk.txt)
         do
             #if it is a valid bitlocker drive
-            if [ $(isBitlockerDrive $drive) = "0" ]
+            if [ $(isBitLockerDrive $drive) = "0" ]
             then
                 size=$(getDiskSizeGB $drive)
                 brandNModel=$(getDiskBrandNModel $drive)
@@ -145,20 +145,20 @@ function getSelectionListBitlockerDrives
         #if no drive found with the desired status (mounted/unmounted) close the app
         if !(($DRIVE_FOUND))
         then
-          errorBitlockerDriveNotFound $STATUS
+          errorBitLockerDriveNotFound $STATUS
         fi
     else
         #if no bitlocker drive found close the app
-        errorBitlockerDriveNotFound ""
+        errorBitLockerDriveNotFound ""
 
     fi
     echo $DRIVE_FOUND
 }
 
-function errorBitlockerDriveNotFound
+function errorBitLockerDriveNotFound
 {
     STATUS=$1
-    errorMessage "No $STATUS Bitlocker drives found!"
+    errorMessage "No $STATUS BitLocker drives found!"
 }
 
 function getDiskFromPartition
@@ -185,13 +185,13 @@ function getDiskBrandNModel
     lsblk -o NAME,VENDOR,MODEL | grep $DISK | grep -v $PARTITION | cut -c8- | sed -e 's/ /_/g'
 }
 
-function isBitlockerDrive
+function isBitLockerDrive
 {
     DRIVE=$1
 
     #return 0 if true
     #return 1 if false
-    sudo /opt/dislocker-gui/util-root.sh "isBitlockerDrive" $DRIVE
+    sudo /opt/dislocker-gui/util-root.sh "isBitLockerDrive" $DRIVE
 }
 
 function createMountDirs
@@ -223,7 +223,7 @@ function mountDrive
             #if the output contains the string "Can't decrypt correctly the VMK." it means the password supplied is wrong
             if [ "$PASSWORD_WRONG" = "0" ]
             then
-                errorMessage "Wrong Bitlocker password! Please try again."
+                errorMessage "Wrong BitLocker password!\nPlease try again."
             fi
         else
             errorMessage "No password supplied!"
@@ -290,22 +290,22 @@ function windowSelectDrive
   if [ "$ACTION" = "Mount" ]
   then
     TITLE="BitLocker Drive List"
-    TEXT="Select the Bitlocker drive to be mounted:"
+    TEXT="Select the BitLocker drive to be mounted:"
     OK_LABEL="Mount Drive"
 
     #before mounting a drive the app loads a list of currently unmounted drives
     SUFFIX_TMP_FILE="unmounted"
 
-    DRIVE_FOUND=$(getNotMountedBitlockerDrives)
+    DRIVE_FOUND=$(getNotMountedBitLockerDrives)
   else
-    TITLE="Currently mounted Bitlocker drives"
-    TEXT="Select the Bitlocker drive to be unmounted:"
+    TITLE="Currently mounted BitLocker drives"
+    TEXT="Select the BitLocker drive to be unmounted:"
     OK_LABEL="Unmount Drive"
 
     #before unmounting a drive the app loads a list of currently mounted drives
     SUFFIX_TMP_FILE="mounted"
 
-    DRIVE_FOUND=$(getMountedBitlockerDrives)
+    DRIVE_FOUND=$(getMountedBitLockerDrives)
   fi
 
   #if at least one drive was found
@@ -331,7 +331,7 @@ function windowSelectDrive
     then
         unmountDrive $DRIVE_SELECTED
     else
-        errorMessage "No Bitlocker drive selected!"
+        errorMessage "No drive selected!"
     fi
     clearTMPFiles
   fi
