@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Copyright (C) 2018 Raryel C. Souza <raryel.costa at gmail.com>
+#Copyright (C) 2019 Raryel C. Souza <raryel.costa at gmail.com>
 
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -343,7 +343,7 @@ function mainWindow
     #loop the main window until the user clicks the window close button or the cancel button
     while [ -n "$ACTION_SELECTED" ]
     do
-      ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity" \
+      ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity v2.0 2019-04-08" \
                       --text="Mount/Unmount BitLocker encrypted drives." \
                       --column="What would you like to do?" 'Mount' 'Unmount' \
                       --height=250)
