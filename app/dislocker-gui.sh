@@ -71,9 +71,10 @@ function checkDependencies
 
     if ! type dislocker-fuse > /dev/null
     then
-        errorMessage "Missing dependency 'Dislocker'. Please install it before using this script.
+        errorMessage "Missing dependency 'Dislocker'. Please install it before using this app.
                                                             \n\nFor Ubuntu: sudo apt install dislocker
-                                                            \n\nFor Fedora: sudo dnf install fuse-dislocker"
+                                                            \n\nFor Fedora: sudo dnf install fuse-dislocker
+                                                            \n\nMore info at: https://github.com/Aorimn/dislocker"
         exit;
     fi
 }
