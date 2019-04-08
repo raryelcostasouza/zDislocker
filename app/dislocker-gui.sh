@@ -315,7 +315,8 @@ function windowSelectDrive
     DRIVE_SELECTED=$(zenity --list --title="$TITLE" \
                             --text="$TEXT" \
                             --radiolist \
-                            --width="450" \
+                            --width="500" \
+                            --height="450" \
                             --column ' ' --column 'Drive' --column 'Brand/Model' --column 'Size' \
                             --ok-label="$OK_LABEL" \
                             $DRIVE_SELECT_LIST)
