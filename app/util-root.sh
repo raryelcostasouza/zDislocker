@@ -67,6 +67,11 @@ case $ACTION in
       PATH_DISLOCKER_FILE=$3
       umount $PATH_MOUNT_POINT
       umount $PATH_DISLOCKER_FILE
+
+      #after unmounting
+      #only deletes the directory if it is completely empty
+      rmdir $PATH_MOUNT_POINT
+      rmdir $PATH_DISLOCKER_FILE
       ;;
 
   "getListSupportedDrives")
