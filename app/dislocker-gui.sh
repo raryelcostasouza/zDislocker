@@ -301,18 +301,22 @@ function windowSelectDrive
 
 function mainWindow
 {
-    ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity" \
-                    --text="Mount/Unmount BitLocker encrypted drives." \
-                    --column="What would you like to do?" 'Mount' 'Unmount' \
-                    --height=250)
+    ACTION_SELECTED="INIT_LOOP"
+    #loop the main window until the user clicks the window close button or the cancel button
+    while [ -n "$ACTION_SELECTED" ]
+    do
+      ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity" \
+                      --text="Mount/Unmount BitLocker encrypted drives." \
+                      --column="What would you like to do?" 'Mount' 'Unmount' \
+                      --height=250)
 
-
-    #only do something if mount/umount clicked
-    #if click cancel or close window do nothing
-    if [ -n "$ACTION_SELECTED" ]
-    then
-      windowSelectDrive $ACTION_SELECTED
-    fi
+      #only do something if mount/umount clicked
+      #if click cancel or close window do nothing
+      if [ -n "$ACTION_SELECTED" ]
+      then
+        windowSelectDrive $ACTION_SELECTED
+      fi
+    done
 }
 
 function isDriveMounted
