@@ -236,6 +236,10 @@ function mountDrive
 
     #open the file browser on the mount point directory
     openFileBrowser $PATH_MOUNT_POINT
+
+    TITLE="Drive mounted at $PATH_MOUNT_POINT"
+    MSG="To eject your drive safely ALWAYS use this app instead of the file browser eject button!!!"
+    windowOperationSuccess "$TITLE"  "$MSG"
 }
 
 function unmountDrive
@@ -250,9 +254,28 @@ function unmountDrive
   #check if drive status changed to unmounted (ejected successfully)
   if [ "$(isDriveMounted $DRIVE_SELECTED)" = "1" ]
   then
-      zenity --info --title="BitLockerDrive Ejected" --text="Now your BitLockerDrive can be removed safely"
+      TITLE="BitLockerDrive Ejected"
+      MSG="Now your BitLockerDrive can be removed safely."
+      windowOperationSuccess "$TITLE" "$MSG"
   else
       errorMessage "Unable to eject BitLockerDrive.\nBefore trying to eject again, please close any opened file browser windows\nand make sure there are no files from the drive currently opened."
+  fi
+}
+
+function windowOperationSuccess
+{
+  TITLE=$1
+  MESSAGE=$2
+  $TYPE=$3
+  zenity --question --title="$TITLE" --no-wrap \
+                      --text="$MESSAGE \n\What would you like to do?" \
+                      --ok-label="Mount/Unmount another drive" --cancel-label="Close"
+
+  #if the user clicks the close button or close the window
+  #then close the app
+  if [ "$?" = "1" ]
+  then
+        exit 0
   fi
 }
 
