@@ -344,9 +344,9 @@ function mainWindow
     while [ -n "$ACTION_SELECTED" ]
     do
       ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity v2.0 2019-04-08" \
-                      --text="Mount/Unmount BitLocker encrypted drives." \
+                      --text="Mount/Unmount BitLocker encrypted drives.\n" \
                       --column="What would you like to do?" 'Mount' 'Unmount' \
-                      --height=250)
+                      --width=500 --height=250)
 
       #only do something if mount/umount clicked
       #if click cancel or close window do nothing
