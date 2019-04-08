@@ -25,6 +25,9 @@ If you eject a drive only using the file browser button it may cause DATA LOSS.
 
 # Screenshots
 
+# Main Window
+![dislocker-gui-ss0](screenshot/main.png?raw=true "Main Window")
+
 # Bitlocker Drive Selection List
 ![dislocker-gui-ss1](screenshot/drive-list.png?raw=true "Bitlocker Drive List")
 
@@ -34,6 +37,8 @@ If you eject a drive only using the file browser button it may cause DATA LOSS.
 # Drive currently Mounted. Eject safely?
 ![dislocker-gui-ss3](screenshot/drive-mounted-eject-safely.png?raw=true "Eject Safely")
 
+# Mount successfully
+![dislocker-gui-ss4](screenshot/mount-success?raw=true "Mount Success")
 
 ## License
 
