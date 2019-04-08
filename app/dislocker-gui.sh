@@ -23,7 +23,7 @@ function getPathMountPoint
     DRIVE_SELECTED=$1
     DRIVE_MOUNTPOINT_BASE="/mnt/BitLockerDrive"
 
-    echo $(echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED")
+    echo "$DRIVE_MOUNTPOINT_BASE-$DRIVE_SELECTED"
 }
 
 function getPathDislockerFile
@@ -31,7 +31,7 @@ function getPathDislockerFile
   DRIVE_SELECTED=$1
   DFILE_LOCATION_BASE="/tmp/DFILE"
 
-  echo $(echo $DFILE_LOCATION_BASE-$DRIVE_SELECTED)
+  echo "$DFILE_LOCATION_BASE-$DRIVE_SELECTED"
 }
 
 function openFileBrowser
@@ -177,7 +177,7 @@ function getDiskBrandNModel
 
     #the disk vendor and model info are located after the 8th char on the output of the command
     #sed command replace spaces with underscores
-    echo $(lsblk -o NAME,VENDOR,MODEL | grep $DISK | grep -v $PARTITION | cut -c8- | sed -e 's/ /_/g')
+    lsblk -o NAME,VENDOR,MODEL | grep $DISK | grep -v $PARTITION | cut -c8- | sed -e 's/ /_/g'
 }
 
 function isBitlockerDrive
@@ -186,7 +186,7 @@ function isBitlockerDrive
 
     #return 0 if true
     #return 1 if false
-    echo $(sudo /opt/dislocker-gui/util-root.sh "isBitlockerDrive" $DRIVE)
+    sudo /opt/dislocker-gui/util-root.sh "isBitlockerDrive" $DRIVE
 }
 
 function createMountDirs
@@ -317,7 +317,7 @@ function isDriveMounted
     PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE)
     PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE)
 
-    echo $(sudo /opt/dislocker-gui/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
+    sudo /opt/dislocker-gui/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
 }
 
 checkDependencies
