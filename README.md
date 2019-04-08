@@ -38,7 +38,7 @@ If you eject a drive only using the file browser button it may cause DATA LOSS.
 ![dislocker-gui-ss3](screenshot/drive-mounted-eject-safely.png?raw=true "Eject Safely")
 
 # Mount successfully
-![dislocker-gui-ss4](screenshot/mount-success?raw=true "Mount Success")
+![dislocker-gui-ss4](screenshot/mount-success.png?raw=true "Mount Success")
 
 ## License
 
