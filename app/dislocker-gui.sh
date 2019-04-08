@@ -56,9 +56,10 @@ function openFileBrowser
         zenity --info --title="File Browser Not Found"
                       --text="Nautilus/Dolphin/Thunar/Nemo not found\n\nOpen your file browser at $PATH_MOUNT_POINT"
     fi
+
     if !(($SUPPORTED_FILE_BROWSER_NOT_FOUND))
     then
-      $($FILE_BROWSER $PATH_MOUNT_POINT)
+      $($FILE_BROWSER $PATH_MOUNT_POINT) > /dev/null
     fi
 }
 
