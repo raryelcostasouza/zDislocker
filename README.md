@@ -1,6 +1,12 @@
 # dislocker-gui-zenity
 Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (https://github.com/Aorimn/dislocker)
 
+
+# Recent Changes 08/04/2019
+* Added support for mounting/unmounting multiple BitLocker drives
+* Fix bug that cause FAT partitions or disks with GPT partitioning not being detected.
+* Fix bug that caused the mounted drive only to be editable by the root user
+
 # Requirements
 1. dislocker
 2. zenity
@@ -10,6 +16,12 @@ Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (ht
 sudo ./install.sh
 
 Note: to enable non-admin users to mount/umount Bitlocker protected drives, by default, during the installation a rule is added to the /etc/sudoers file. This rule allow all users to execute the script util-root.sh (where the root commands needed for mounting/umounting are located).
+
+# WARNING!!!
+The proper and safe way to eject the BitLocker encrypted drives is using this app.
+Your file browser may automatically show an eject button, but it does not know how to eject with BitLocker drives properly.
+
+If you eject a drive only using the file browser button it may cause DATA LOSS.
 
 # Screenshots
 
