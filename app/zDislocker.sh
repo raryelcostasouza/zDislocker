@@ -87,7 +87,7 @@ function checkDependencies
 
 function clearTMPFiles
 {
-    sudo /opt/dislocker-gui/util-root.sh "clearTMP"
+    sudo /opt/zDislocker/util-root.sh "clearTMP"
 }
 
 function errorMessage
@@ -98,7 +98,7 @@ function errorMessage
 
 function getListSupportedDrives
 {
-    sudo /opt/dislocker-gui/util-root.sh "getListSupportedDrives"
+    sudo /opt/zDislocker/util-root.sh "getListSupportedDrives"
 }
 
 function getMountedBitLockerDrives
@@ -192,14 +192,14 @@ function isBitLockerDrive
 
     #return 0 if true
     #return 1 if false
-    sudo /opt/dislocker-gui/util-root.sh "isBitLockerDrive" $DRIVE
+    sudo /opt/zDislocker/util-root.sh "isBitLockerDrive" $DRIVE
 }
 
 function createMountDirs
 {
   PATH_MOUNT_POINT=$1
   PATH_DISLOCKER_FILE=$2
-  sudo /opt/dislocker-gui/util-root.sh "createMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
+  sudo /opt/zDislocker/util-root.sh "createMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
 }
 
 function mountDrive
@@ -219,7 +219,7 @@ function mountDrive
         if [ -n "$DRIVE_PASSWORD" ]
         then
             #try to unlock the drive
-            PASSWORD_WRONG=$(sudo /opt/dislocker-gui/util-root.sh "decrypt" $DRIVE_SELECTED $DRIVE_PASSWORD $PATH_DISLOCKER_FILE)
+            PASSWORD_WRONG=$(sudo /opt/zDislocker/util-root.sh "decrypt" $DRIVE_SELECTED $DRIVE_PASSWORD $PATH_DISLOCKER_FILE)
 
             #if the output contains the string "Can't decrypt correctly the VMK." it means the password supplied is wrong
             if [ "$PASSWORD_WRONG" = "0" ]
@@ -232,7 +232,7 @@ function mountDrive
     done
 
     ID_MAIN_USER_GROUP=$(id -g)
-    (sudo /opt/dislocker-gui/util-root.sh "mount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE $UID $ID_MAIN_USER_GROUP) |
+    (sudo /opt/zDislocker/util-root.sh "mount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE $UID $ID_MAIN_USER_GROUP) |
         zenity --progress --pulsate --auto-close --text="Please wait...\nMounting BitLockerDrive..." --title="Mounting Drive $DRIVE_SELECTED..."
 
     #open the file browser on the mount point directory
@@ -249,14 +249,14 @@ function unmountDrive
   PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE_SELECTED)
   PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE_SELECTED)
 
-  (sudo /opt/dislocker-gui/util-root.sh "unmount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE) |
+  (sudo /opt/zDislocker/util-root.sh "unmount" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE) |
       zenity --progress --pulsate --auto-close --text="Please wait...\nSaving data..." --title="Saving Data..."
 
   #check if drive status changed to unmounted (ejected successfully)
   if [ "$(isDriveMounted $DRIVE_SELECTED)" = "1" ]
   then
       #after drive ejected remove empty mount directories
-      (sudo /opt/dislocker-gui/util-root.sh "clearMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
+      (sudo /opt/zDislocker/util-root.sh "clearMountDir" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE)
       TITLE="BitLockerDrive Ejected"
       MSG="Now your BitLockerDrive can be removed safely."
       windowOperationSuccess "$TITLE" "$MSG"
@@ -365,7 +365,7 @@ function isDriveMounted
     PATH_MOUNT_POINT=$(getPathMountPoint $DRIVE)
     PATH_DISLOCKER_FILE=$(getPathDislockerFile $DRIVE)
 
-    sudo /opt/dislocker-gui/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
+    sudo /opt/zDislocker/util-root.sh "isDriveMounted" $PATH_MOUNT_POINT $PATH_DISLOCKER_FILE
 }
 
 checkDependencies
