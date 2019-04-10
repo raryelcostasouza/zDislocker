@@ -15,7 +15,8 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#dislocker-gui
+#zDislocker
+#https://github.com/raryelcostasouza/zDislocker
 #Zenity based GUI for mounting and unmounting BitLocker drives using dislocker
 
 function getPathMountPoint
@@ -343,7 +344,7 @@ function mainWindow
     #loop the main window until the user clicks the window close button or the cancel button
     while [ -n "$ACTION_SELECTED" ]
     do
-      ACTION_SELECTED=$(zenity --list --title="Dislocker-GUI-Zenity v2.0 2019-04-08" \
+      ACTION_SELECTED=$(zenity --list --title="zDislocker v2.1 2019-04-10" \
                       --text="Mount/Unmount BitLocker encrypted drives.\n" \
                       --column="What would you like to do?" 'Mount' 'Unmount' \
                       --width=500 --height=250)

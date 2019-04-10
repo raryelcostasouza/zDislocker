@@ -15,7 +15,9 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#dislocker-gui-zenity
+#zDislocker
+#https://github.com/raryelcostasouza/zDislocker
+
 #This util-root.sh script contains the commands used by the dislocker-gui.sh
 #that need to be run as root user
 
