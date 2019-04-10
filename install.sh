@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#sudo rule to permit non-root users to use the dislocker-gui without being admin users
+#sudo rule to permit non-root users to use the zDislocker without being admin users
 LINE_SUDOERS="ALL ALL=NOPASSWD: /opt/zDislocker/util-root.sh"
 
 mkdir -p /opt/zDislocker

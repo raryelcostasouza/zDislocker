@@ -18,7 +18,7 @@
 #zDislocker
 #https://github.com/raryelcostasouza/zDislocker
 
-#This util-root.sh script contains the commands used by the dislocker-gui.sh
+#This util-root.sh script contains the commands used by the zDislocker.sh
 #that need to be run as root user
 
 ACTION=$1
