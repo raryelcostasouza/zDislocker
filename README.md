@@ -1,5 +1,5 @@
-# dislocker-gui-zenity
-Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (https://github.com/Aorimn/dislocker)
+# zDislocker
+Zenity based GUI for mounting and umounting BitLocker drives using Dislocker (https://github.com/Aorimn/dislocker)
 
 
 # Recent Changes 08/04/2019
@@ -15,7 +15,7 @@ Zenity based GUI for mounting and umounting Bitlocker drives using dislocker (ht
 # Installation instructions
 sudo ./install.sh
 
-Note: to enable non-admin users to mount/umount Bitlocker protected drives, by default, during the installation a rule is added to the /etc/sudoers file. This rule allow all users to execute the script util-root.sh (where the root commands needed for mounting/umounting are located).
+Note: to enable non-admin users to mount/umount BitLocker protected drives, by default, during the installation a rule is added to the /etc/sudoers file. This rule allow all users to execute the script util-root.sh (where the root commands needed for mounting/umounting are located).
 
 # WARNING!!!
 The proper and safe way to eject the BitLocker encrypted drives is using this app.
@@ -28,8 +28,8 @@ If you eject a drive only using the file browser button it may cause DATA LOSS.
 # Main Window
 ![dislocker-gui-ss0](screenshot/main.png?raw=true "Main Window")
 
-# Bitlocker Drive Selection List
-![dislocker-gui-ss1](screenshot/drive-list.png?raw=true "Bitlocker Drive List")
+# BitLocker Drive Selection List
+![dislocker-gui-ss1](screenshot/drive-list.png?raw=true "BitLocker Drive List")
 
 # Password Input
 ![dislocker-gui-ss2](screenshot/password-input.png?raw=true "Password Input")
