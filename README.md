@@ -4,8 +4,7 @@ Zenity based GUI for mounting and umounting BitLocker drives using Dislocker (ht
 
 # Recent Changes 08/04/2019
 
-## Release v2.1 - https://github.com/raryelcostasouza/dislocker-gui-zenity/releases/tag/v2.0
-
+## Release v2.1 - https://github.com/raryelcostasouza/zDislocker/releases/tag/v2.1
 * Rename the app to zDislocker (zenity Dislocker)
 * Fix bug on installer. The line on sudoers file was being added extra times even if it was already there.
 
