@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #sudo rule to permit non-root users to use the dislocker-gui without being admin users
-LINE_SUDOERS="ALL ALL=NOPASSWD: /opt/dislocker-gui/util-root.sh"
+LINE_SUDOERS="ALL ALL=NOPASSWD: /opt/zDislocker/util-root.sh"
 
-mkdir -p /opt/dislocker-gui
+mkdir -p /opt/zDislocker
 
-cp -r app/* /opt/dislocker-gui/
-cp shortcut/dislocker-gui.desktop /usr/share/applications/
+cp -r app/* /opt/zDislocker/
+cp shortcut/zdislocker.desktop /usr/share/applications/
 
 #check if the line already exists in the /etc/sudoers file
 LINE_SUDOERS_EXISTS=$(cat /etc/sudoers | grep -q "$LINE_SUDOERS"; echo $?)

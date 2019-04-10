@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Categories=Filesystem;Encryption;
+Terminal=false
+Comment=Mount/umount BitLocker encrypted disks
+Exec=bash -c "/opt/zDislocker/zDislocker.sh"
+Name=zDislocker
+Icon=/opt/zDislocker/icon.png
