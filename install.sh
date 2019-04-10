@@ -12,7 +12,7 @@ cp shortcut/dislocker-gui.desktop /usr/share/applications/
 LINE_SUDOERS_EXISTS=$(cat /etc/sudoers | grep -q "$LINE_SUDOERS"; echo $?)
 
 #if line does not exist yet... append it by the end of the file
-if [ $LINE_SUDOERS_EXISTS ]
+if [ "$LINE_SUDOERS_EXISTS" = "1" ]
 then
     echo $LINE_SUDOERS >> /etc/sudoers
 fi
